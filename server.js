@@ -5,7 +5,9 @@ const cors = require('koa2-cors')
 const port = process.env.port || 7070
 const app = new Koa()
 const slow = require('koa-slow')
+const koaStatic = require('koa-static')
 app.use(cors())
+app.use(koaStatic('./assets'))
 
 const router = require('./routers')
 
