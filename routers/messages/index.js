@@ -11,7 +11,16 @@ router.get('/messages', async (ctx) => {
   ctx.response.body = {
     status: 'OK',
     timestamp: Date.now().toString(),
-    news: db.messages
+    messages: db.messages
+  }
+})
+router.get('/messages/last', async (ctx) => {
+
+  console.log('get messages')
+  ctx.response.body = {
+    status: 'OK',
+    timestamp: Date.now().toString(),
+    messages: db.messages[db.messages.length - 1]
   }
 })
 
