@@ -1,8 +1,10 @@
 const combineRoute = require('koa-combine-routers')
 const messages = require('./messages')
+const filter = require('./filter')
 
 const router = combineRoute(
-  messages
+  messages,
+  filter
 )
 
 module.exports = router

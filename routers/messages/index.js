@@ -38,20 +38,40 @@ router.get('/message/:id', async (ctx) => {
 //create a new message
 router.post('/messages', async (ctx) => {
   console.log((ctx.request.body), "message");
-  // if (ctx.request.body){
-  //   const { message } = JSON.parse(ctx.request.body)
-  // }
 
-  // Как то вытащить отсюда мессадж, возникает ошибка при отправке файла если есть файл с JSON.МО жет сделать отправку сообщений через форм дату ?
-  // console.log((ctx.request.files), "file");
-  // const {type, file} = ctx.request.body
-  const {message , type} = ctx.request.body
+  const {message , text} = ctx.request.body
   const {file} = ctx.request.files
-  // console.log(message, "это сообщение");
-  console.log(file, "files");
-  
-  // console.log(type," types");
-  // console.log(file," types 2");
+
+  // console.log(file, "files");
+
+  if (file){
+    console.log(text, "это текст из файл ");
+    let dir = null;
+    if (file.mimetype.startsWith("image")) dir = './assets/pic'
+    if (file.mimetype.startsWith("video")) dir = './assets/video'
+    if (file.mimetype.startsWith("audio")) dir = './assets/audio'
+    if (dir === null) dir = './assets/other'
+   
+    const dirPath = dir.split("/")[dir.split("/").length - 1]
+    let fileName = file.originalFilename
+    
+      if (fs.readdirSync(dir).includes(fileName)) {
+        fileName = Date.now() + '_' + fileName
+      }
+      fileName = fileName.split(" ").join("_")
+
+      fs.copyFile(file.filepath, dir +"/" + fileName, (err) => {
+        if (err) {
+          console.error(err)
+        }
+      })
+      db.addMessage( new Message(text, "http://localhost:7070/"+ dirPath + "/" + fileName, file.mimetype))
+      console.log(`File created : ${fileName}`, new Date(Date.now()).toLocaleString())
+      console.log(db.messages);
+      ctx.response.body = `File created : ${fileName}`
+      return
+  }
+
   try {
     if (message) {
       db.addMessage(new Message(message))
@@ -72,30 +92,7 @@ router.post('/messages', async (ctx) => {
     }
   }
 
-  if (file){
-    let dir = null;
-    if (file.mimetype.startsWith("image")) dir = './assets/pic'
-    if (file.mimetype.startsWith("video")) dir = './assets/video'
-    if (file.mimetype.startsWith("audio")) dir = './assets/audio'
-    if (dir === null) dir = './assets/other'
-   
-    const dirPath = dir.split("/")[dir.split("/").length - 1]
-    let fileName = file.originalFilename
-    
-      if (fs.readdirSync(dir).includes(fileName)) {
-        fileName = Date.now() + '_' + fileName
-      }
-      fileName = fileName.split(" ").join("_")
-
-      fs.copyFile(file.filepath, dir +"/" + fileName, (err) => {
-        if (err) {
-          console.error(err)
-        }
-      })
-      db.addMessage(new Message("http://localhost:7070/"+ dirPath + "/" +fileName, file.mimetype))
-      console.log(`File created : ${fileName}`, new Date(Date.now()).toLocaleString())
-      ctx.response.body = `File created : ${fileName}`
-  }
+  
 })
 
 //update 
