@@ -24,6 +24,15 @@ router.get('/messages/category', async (ctx) => {
       messages: categoryCount() 
     }
   })
+router.get('/messages/category/filter', async (ctx) => {
+    const {filter} = ctx.query
+    console.log('get category')
+    ctx.response.body = {
+      status: 'OK',
+      timestamp: Date.now().toString(),
+      messages: db.messages.filter((message) => message.type.toLowerCase().startsWith(filter))
+    }
+  })
 
 
   module.exports = router
