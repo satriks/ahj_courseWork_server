@@ -1,3 +1,0 @@
-const loader = (file) => {
-    
-}

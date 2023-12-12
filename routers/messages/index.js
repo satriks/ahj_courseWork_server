@@ -46,11 +46,12 @@ router.post('/messages', async (ctx) => {
 
   if (file){
     console.log(text, "это текст из файл ");
-    let dir = null;
+    let dir = "other/text";
     if (file.mimetype.startsWith("image")) dir = './assets/pic'
     if (file.mimetype.startsWith("video")) dir = './assets/video'
     if (file.mimetype.startsWith("audio")) dir = './assets/audio'
-    if (dir === null) dir = './assets/other'
+   
+    if (dir === "other/text") dir = './assets/other'
    
     const dirPath = dir.split("/")[dir.split("/").length - 1]
     let fileName = file.originalFilename
@@ -65,16 +66,18 @@ router.post('/messages', async (ctx) => {
           console.error(err)
         }
       })
-      db.addMessage( new Message(text, "http://localhost:7070/"+ dirPath + "/" + fileName, file.mimetype))
+      console.log(dir, " this dir ");
+      if (dir === './assets/other') db.addMessage( new Message(text, "http://localhost:7070/"+ dirPath + "/" + fileName, "other"))
+      else {db.addMessage( new Message(text, "http://localhost:7070/"+ dirPath + "/" + fileName, file.mimetype))}
       console.log(`File created : ${fileName}`, new Date(Date.now()).toLocaleString())
-      console.log(db.messages);
+      // console.log(db.messages);
       ctx.response.body = `File created : ${fileName}`
       return
   }
 
   try {
     if (message) {
-      db.addMessage(new Message(message))
+      db.addMessage(new Message(message, null, "message"))
       ctx.body = "ok, записано"
       return
     }
@@ -119,8 +122,8 @@ router.post('/message/:id/delete', async (ctx) => {
 })
 
 
-db.addMessage(new Message("тестовое сообщение "))
-db.addMessage(new Message("тестовое сообщение 2"))
+db.addMessage(new Message("тестовое сообщение ", null, "message"))
+db.addMessage(new Message("тестовое сообщение 2", null, "message"))
 
 
 module.exports = router
