@@ -6,7 +6,6 @@ const port = process.env.port || 7070
 const app = new Koa()
 const http = require('http')
 const WS = require('ws')
-const url = require('url')
 const koaStatic = require('koa-static')
 const db = require('./db/db')
 app.use(cors())
@@ -27,29 +26,25 @@ const wsServer = new WS.Server({
 })
 
 wsServer.on('connection', (ws, req) => {
-  console.log("подключение ws");
+  console.log('подключение ws')
 
   ws.addEventListener('message', (message) => {
     const data = message.data
-    if (data === "update"){
+    if (data === 'update') {
       Array.from(wsServer.clients)
         .filter(client => client.readyState === WS.OPEN)
-        .forEach(client => client.send(JSON.stringify( db.messages[db.messages.length - 1])))
+        .forEach(client => client.send(JSON.stringify(db.messages[db.messages.length - 1])))
     }
   })
-
 })
 
 app.use((ctx, next) => {
-  ctx.body = " Сервер работает. Но такой запрос не понимает !"
+  ctx.body = ' Сервер работает. Но такой запрос не понимает !'
   next()
 })
-
 
 app.use(router())
 
 app.listen(port)
 server.listen(port + 1)
 console.log('listen port ' + port)
-
-
