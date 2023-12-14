@@ -34,6 +34,15 @@ router.get('/messages/category/filter', async (ctx) => {
     }
   })
 
+  router.get('/messages/favorite', async (ctx) => {
+    console.log('get favorite')
+    ctx.response.body = {
+      status: 'OK',
+      timestamp: Date.now().toString(),
+      messages: db.messages.filter((message) => message.favorite)
+    }
+  })
+
 
   module.exports = router
 

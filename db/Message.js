@@ -7,6 +7,7 @@ const Message = class Message{
         this.type = type
         this.file = file
         this.text = text
+        this.favorite = false
     }
 }
 

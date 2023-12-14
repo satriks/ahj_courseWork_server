@@ -4,10 +4,12 @@ const Message = require('../../db/Message')
 const router = new Router()
 const fs = require('fs')
 
+
 // get all messages
 router.get('/messages', async (ctx) => {
 
   console.log('get messages')
+  console.log(db.messages);
   ctx.response.body = {
     status: 'OK',
     timestamp: Date.now().toString(),
@@ -45,6 +47,8 @@ router.post('/messages', async (ctx) => {
   // console.log(file, "files");
 
   if (file){
+    // console.log(file, "this is a file ");
+
     console.log(text, "это текст из файл ");
     let dir = "other/text";
     if (file.mimetype.startsWith("image")) dir = './assets/pic'
@@ -60,7 +64,7 @@ router.post('/messages', async (ctx) => {
         fileName = Date.now() + '_' + fileName
       }
       fileName = fileName.split(" ").join("_")
-
+      console.log(fileName, " this is filename");
       fs.copyFile(file.filepath, dir +"/" + fileName, (err) => {
         if (err) {
           console.error(err)
@@ -110,6 +114,23 @@ router.put('/message/:id', async (ctx) => {
   }
 })
 
+router.put('/message/:id/favorite', async (ctx) => {
+  console.log("put favorite");
+  const id = ctx.params.id
+  const message = db.messages.find(message => message.id === id)
+  if (message) {
+    message.favorite = !message.favorite
+    ctx.response.body = {
+      status: 'Change',
+    }
+  }
+  else {
+    ctx.response.body = {
+      status: "invalid id message"
+    }
+  }
+})
+
 //delete message
 router.post('/message/:id/delete', async (ctx) => {
   const id = ctx.params.id
@@ -124,6 +145,22 @@ router.post('/message/:id/delete', async (ctx) => {
 
 db.addMessage(new Message("тестовое сообщение ", null, "message"))
 db.addMessage(new Message("тестовое сообщение 2", null, "message"))
+db.addMessage(new Message("тестовое сообщение 3", null, "message"))
+db.addMessage(new Message("тестовое сообщение 4", null, "message"))
+db.addMessage(new Message("тестовое сообщение 5", null, "message"))
+db.addMessage(new Message("тест звука", 'http://localhost:7070/audio/sample-9s.mp3', "audio"))
+db.addMessage(new Message("тестовое сообщение 6", null, "message"))
+db.addMessage(new Message("тест видео", 'http://localhost:7070/video/sample-5s.mp4', "video"))
+db.addMessage(new Message("тест изображения", 'http://localhost:7070/pic/test_5.jpeg', "image"))
+db.addMessage(new Message("тестовое сообщение 7", null, "message"))
+db.addMessage(new Message("тестовое сообщение 8", null, "message"))
+db.addMessage(new Message("тест записи звука", 'http://localhost:7070/audio/audio.mp3', "audio"))
+db.addMessage(new Message("тест  записи видео", 'http://localhost:7070/video/video.mp4', "video"))
+db.addMessage(new Message("тестовое сообщение 9", null, "message"))
+db.addMessage(new Message("тестовое сообщение 10", null, "message"))
+db.addMessage(new Message("тестовое сообщение 11 с ссылкой http://my-link", null, "message"))
+db.addMessage(new Message("тестовое сообщение 12 с ссылкой https://my-link", null, "message"))
+
 
 
 module.exports = router
