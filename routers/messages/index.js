@@ -4,10 +4,12 @@ const Message = require('../../db/Message')
 const router = new Router()
 const fs = require('fs')
 
+const port = ":7070"
+
 // get all messages
 router.get('/messages', async (ctx) => {
   console.log('get messages')
-  console.log(db.messages)
+  // console.log(db.messages)
   ctx.response.body = {
     status: 'OK',
     timestamp: Date.now().toString(),
@@ -140,14 +142,14 @@ db.addMessage(new Message('тестовое сообщение 2', null, 'messag
 db.addMessage(new Message('тестовое сообщение 3', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 4', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 5', null, 'message'))
-db.addMessage(new Message('тест звука', 'http://localhost:70/audio/sample-9s.mp3', 'audio'))
+db.addMessage(new Message('тест звука', 'http://localhost' + port + '/audio/sample-9s.mp3', 'audio'))
 db.addMessage(new Message('тестовое сообщение 6', null, 'message'))
-db.addMessage(new Message('тест видео', 'http://localhost:70/video/sample-5s.mp4', 'video'))
-db.addMessage(new Message('тест изображения', 'http://localhost:70/pic/test_5.jpeg', 'image'))
+db.addMessage(new Message('тест видео', 'http://localhost' + port + '/video/sample-5s.mp4', 'video'))
+db.addMessage(new Message('тест изображения', 'http://localhost' + port + '/pic/test_5.jpeg', 'image'))
 db.addMessage(new Message('тестовое сообщение 7', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 8', null, 'message'))
-db.addMessage(new Message('тест записи звука', 'http://localhost:70/audio/audio.mp3', 'audio'))
-db.addMessage(new Message('тест  записи видео', 'http://localhost:70/video/video.mp4', 'video'))
+db.addMessage(new Message('тест записи звука', 'http://localhost' + port + '/audio/audio.mp3', 'audio'))
+db.addMessage(new Message('тест  записи видео', 'http://localhost' + port + '/video/video.mp4', 'video'))
 db.addMessage(new Message('тестовое сообщение 9', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 10', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 11 с ссылкой http://my-link', null, 'message'))

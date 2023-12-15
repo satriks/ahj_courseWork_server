@@ -3561,6 +3561,16 @@ koa-static@^5.0.0:
     debug "^3.1.0"
     koa-send "^5.0.0"
 
+koa-websocket@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/koa-websocket/-/koa-websocket-7.0.0.tgz#29e77ccebf8621f00bf8db988275561645187ad3"
+  integrity sha512-MsHUFKqA4+j+0dpPKWtsvZfnpQ1NcgF+AaTZQZ4B3Xj/cWK31qqmKx9HnA5Gw1LV2aIDzqwy0IDBsZYRurTUAg==
+  dependencies:
+    co "^4.6.0"
+    debug "^4.3.4"
+    koa-compose "^4.1.0"
+    ws "^8.5.0"
+
 koa2-cors@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/koa2-cors/-/koa2-cors-2.0.6.tgz#9ad23df3a0b9bb84530b46f5944f3fb576086554"
@@ -5280,6 +5290,11 @@ ws@^8.15.0:
   version "8.15.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.15.0.tgz#db080a279260c5f532fc668d461b8346efdfcf86"
   integrity sha512-H/Z3H55mrcrgjFwI+5jKavgXvwQLtfPCUEp6pi35VhoB0pfcHnSoyuTzkBEZpzq49g1193CUEwIvmsjcotenYw==
+
+ws@^8.5.0:
+  version "8.15.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.15.1.tgz#271ba33a45ca0cc477940f7f200cd7fba7ee1997"
+  integrity sha512-W5OZiCjXEmk0yZ66ZN82beM5Sz7l7coYxpRkzS+p9PP+ToQry8szKh+61eNktr7EA9DOwvFGhfC605jDHbP6QQ==
 
 xdg-basedir@^3.0.0:
   version "3.0.0"
