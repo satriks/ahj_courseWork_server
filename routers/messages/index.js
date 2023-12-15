@@ -4,7 +4,6 @@ const Message = require('../../db/Message')
 const router = new Router()
 const fs = require('fs')
 
-const port = ":7070"
 
 // get all messages
 router.get('/messages', async (ctx) => {
@@ -70,8 +69,8 @@ router.post('/messages', async (ctx) => {
       }
     })
     console.log(dir, ' this dir ')
-    if (dir === './assets/other') db.addMessage(new Message(text, 'http://localhost:70/' + dirPath + '/' + fileName, 'other'))
-    else { db.addMessage(new Message(text, 'http://localhost:70/' + dirPath + '/' + fileName, file.mimetype)) }
+    if (dir === './assets/other') db.addMessage(new Message(text, 'https://course-server-n9kd.onrender.com/' + dirPath + '/' + fileName, 'other'))
+    else { db.addMessage(new Message(text, 'https://course-server-n9kd.onrender.com/' + dirPath + '/' + fileName, file.mimetype)) }
     console.log(`File created : ${fileName}`, new Date(Date.now()).toLocaleString())
     // console.log(db.messages);
     ctx.response.body = `File created : ${fileName}`
@@ -142,14 +141,14 @@ db.addMessage(new Message('тестовое сообщение 2', null, 'messag
 db.addMessage(new Message('тестовое сообщение 3', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 4', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 5', null, 'message'))
-db.addMessage(new Message('тест звука', 'http://localhost' + port + '/audio/sample-9s.mp3', 'audio'))
+db.addMessage(new Message('тест звука', 'https://course-server-n9kd.onrender.com/audio/sample-9s.mp3', 'audio'))
 db.addMessage(new Message('тестовое сообщение 6', null, 'message'))
-db.addMessage(new Message('тест видео', 'http://localhost' + port + '/video/sample-5s.mp4', 'video'))
-db.addMessage(new Message('тест изображения', 'http://localhost' + port + '/pic/test_5.jpeg', 'image'))
+db.addMessage(new Message('тест видео', 'https://course-server-n9kd.onrender.com/video/sample-5s.mp4', 'video'))
+db.addMessage(new Message('тест изображения', 'https://course-server-n9kd.onrender.com/pic/test_5.jpeg', 'image'))
 db.addMessage(new Message('тестовое сообщение 7', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 8', null, 'message'))
-db.addMessage(new Message('тест записи звука', 'http://localhost' + port + '/audio/audio.mp3', 'audio'))
-db.addMessage(new Message('тест  записи видео', 'http://localhost' + port + '/video/video.mp4', 'video'))
+db.addMessage(new Message('тест записи звука', 'https://course-server-n9kd.onrender.com/audio/audio.mp3', 'audio'))
+db.addMessage(new Message('тест  записи видео', 'https://course-server-n9kd.onrender.com/video/video.mp4', 'video'))
 db.addMessage(new Message('тестовое сообщение 9', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 10', null, 'message'))
 db.addMessage(new Message('тестовое сообщение 11 с ссылкой http://my-link', null, 'message'))
